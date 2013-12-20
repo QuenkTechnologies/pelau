@@ -1,4 +1,4 @@
-pelau
-=====
+groute
+======
 
-Tiny Go Web framework for restful applications.
+Simple web router written in go.
