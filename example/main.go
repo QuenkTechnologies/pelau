@@ -15,7 +15,7 @@ func handler(w http.ResponseWriter, r *groute.Request) {
 
 func main() {
 
-	router := groute.NewRouter()
+	router := pelau.NewRouter(pelau.DefaultRouter)
 
 	router.Get(router.Static("/static/get", handler)).
 		Post(router.Static("/static/post", handler)).
@@ -26,8 +26,7 @@ func main() {
 		Post(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
 		Put(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
 		Head(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
-		Delete(router.Regex("/regex/([a-zA-Z0-9])+", handler))
-
-	http.ListenAndServe(":8080", router)
+		Delete(router.Regex("/regex/([a-zA-Z0-9])+", handler)).
+		Bind(":8080")
 
 }

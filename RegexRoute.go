@@ -1,7 +1,6 @@
-package groute
+package pelau
 
 import (
-	"net/http"
 	"regexp"
 )
 
@@ -11,17 +10,22 @@ type RegexRoute struct {
 	action Callback
 }
 
-//Trigger implements the method from the Route interface.
-func (self *RegexRoute) Trigger(route string, w http.ResponseWriter, r *http.Request) bool {
+//Query indicates if we have a regex match or not.
+func (s *RegexRoute) Query(route string) bool {
 
-	if params := self.path.FindStringSubmatch(route); len(params) > 0 {
-
-		self.action(w, r)
+	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
 		return true
 
 	}
 	return false
+}
+
+//Execute executes this route.
+func (s *RegexRoute) Execute(req *Request, res *Response) {
+
+	s.action(req, res)
+
 }
 
 //NewRegexRoute constructor.

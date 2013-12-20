@@ -1,8 +1,6 @@
-package groute
+package pelau
 
-import (
-	"net/http"
-)
+import ()
 
 //StaticRoute provides static routing support.
 type StaticRoute struct {
@@ -10,18 +8,23 @@ type StaticRoute struct {
 	action Callback
 }
 
-//Trigger implements the method from the Route interface.
-func (self *StaticRoute) Trigger(route string, w http.ResponseWriter, r *http.Request) bool {
+//Query looks up whether the current http path matches the static route..
+func (s *StaticRoute) Query(route string) bool {
 
-	if self.path == route {
-
-		self.action(w, r)
+	if s.path == route {
 
 		return true
 
 	}
 
 	return false
+
+}
+
+//Execute executes this route.
+func (s *StaticRoute) Execute(req *Request, res *Response) {
+
+	s.action(req, res)
 
 }
 
