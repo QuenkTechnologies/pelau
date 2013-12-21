@@ -1,6 +1,7 @@
 package pelau
 
 import (
+	"net/http"
 	"net/url"
 )
 
@@ -11,4 +12,6 @@ type Request interface {
 	Url() *url.URL
 
 	Params() []string
+
+	Raw() *http.Request
 }

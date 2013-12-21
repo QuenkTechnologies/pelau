@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/metasansana/pelau"
+	"net/http"
 )
 
 func handler(req pelau.Request, res pelau.Response) {
@@ -14,7 +15,7 @@ func handler(req pelau.Request, res pelau.Response) {
 
 func main() {
 
-	pelau.Init(pelau.DefaultRouter()).
+	pelau.Cook(pelau.DefaultRouter()).
 		Get(pelau.Static("/static/get", handler)).
 		Post(pelau.Static("/static/post", handler)).
 		Put(pelau.Static("/static/put", handler)).
@@ -25,6 +26,18 @@ func main() {
 		Put(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
 		Head(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
 		Delete(pelau.Regex("/regex/([a-zA-Z0-9]+)", handler)).
-		Bind(":8080")
+		Bind("127.0.0.1:8080", nil)
+
+	http.ListenAndServe("127.0.0.1:8888", pelau.Cook(pelau.DefaultRouter()).
+		Get(pelau.Static("/static/get", handler)).
+		Post(pelau.Static("/static/post", handler)).
+		Put(pelau.Static("/static/put", handler)).
+		Head(pelau.Static("/static/head", handler)).
+		Delete(pelau.Static("/static/delete", handler)).
+		Get(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Post(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Put(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Head(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Delete(pelau.Regex("/regex/([a-zA-Z0-9]+)", handler)))
 
 }

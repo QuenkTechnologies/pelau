@@ -21,7 +21,7 @@ var _ = Describe("BridgeRouter", func() {
 		mockCtl = gomock.NewController(gomocktestreporter.New())
 		router = pelau.NewMockRouter(mockCtl)
 		route = pelau.NewMockRoute(mockCtl)
-		bridge = pelau.Init(router)
+		bridge = pelau.Cook(router)
 
 	})
 
@@ -71,8 +71,9 @@ var _ = Describe("BridgeRouter", func() {
 
 	It("should bridge Bind calls", func() {
 
-		router.EXPECT().Bind("addr")
-		bridge.Bind("addr")
+		cb := func() {}
+		router.EXPECT().Bind("addr", cb)
+		bridge.Bind("addr", cb)
 
 	})
 

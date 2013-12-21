@@ -89,12 +89,12 @@ func (_mr *_MockRouterRecorder) Head(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Head", arg0)
 }
 
-func (_m *MockRouter) Bind(addr string) {
-	_m.ctrl.Call(_m, "Bind", addr)
+func (_m *MockRouter) Bind(_param0 string, _param1 BindFunc) {
+	_m.ctrl.Call(_m, "Bind", _param0, _param1)
 }
 
-func (_mr *_MockRouterRecorder) Bind(arg0 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Bind", arg0)
+func (_mr *_MockRouterRecorder) Bind(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Bind", arg0, arg1)
 }
 
 func (_m *MockRouter) ServeHTTP(_param0 http.ResponseWriter, _param1 *http.Request) {

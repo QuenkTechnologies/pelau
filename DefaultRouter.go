@@ -17,7 +17,8 @@ type routeList map[string][]Route
 
 //DefaultRouter is the object that sets up routing.
 type defaultRouter struct {
-	routes routeList
+	routes  routeList
+	onServe BindFunc
 }
 
 //Get adds a GET route
@@ -92,9 +93,17 @@ func (r *defaultRouter) ServeHTTP(res http.ResponseWriter, req *http.Request) {
 }
 
 //Bind binds the server to an interface and starts the app.
-func (r *defaultRouter) Bind(addr string) {
+func (r *defaultRouter) Bind(addr string, f BindFunc) {
+
+	r.onServe = f
 
 	http.ListenAndServe(addr, r)
+
+	if f != nil {
+
+		f()
+
+	}
 
 }
 
@@ -109,6 +118,6 @@ func DefaultRouter() Router {
 	routes[head] = make([]Route, 0)
 	routes[any] = make([]Route, 0)
 
-	return &defaultRouter{routes}
+	return &defaultRouter{routes, DefaultBindFunc()}
 
 }

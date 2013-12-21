@@ -31,9 +31,10 @@ func (r defaultRequest) Params() []string {
 
 }
 
-func (r defaultRequest) setParams(params []string) {
+//
+func (r defaultRequest) Raw() *http.Request {
 
-	r.params = params
+	return r.request
 
 }
 
