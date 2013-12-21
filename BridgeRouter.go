@@ -51,9 +51,9 @@ func (b BridgeRouter) Head(r Route) Router {
 
 }
 
-func (b BridgeRouter) Bind(addr string) {
+func (b BridgeRouter) Bind(addr string, f BindFunc) {
 
-	b.router.Bind(addr)
+	b.router.Bind(addr, f)
 
 }
 

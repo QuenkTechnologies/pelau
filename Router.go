@@ -18,7 +18,7 @@ type Router interface {
 
 	Head(r Route) Router
 
-	Bind(addr string)
+	Bind(string, BindFunc)
 
 	ServeHTTP(http.ResponseWriter, *http.Request)
 }
