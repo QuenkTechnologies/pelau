@@ -4,6 +4,7 @@
 package pelau
 
 import (
+	http "net/http"
 	gomock "code.google.com/p/gomock/gomock"
 )
 
@@ -28,20 +29,12 @@ func (_m *MockRoute) EXPECT() *_MockRouteRecorder {
 	return _m.recorder
 }
 
-func (_m *MockRoute) Query(_param0 string) bool {
-	ret := _m.ctrl.Call(_m, "Query", _param0)
+func (_m *MockRoute) Query(_param0 string, _param1 http.ResponseWriter, _param2 *http.Request) bool {
+	ret := _m.ctrl.Call(_m, "Query", _param0, _param1, _param2)
 	ret0, _ := ret[0].(bool)
 	return ret0
 }
 
-func (_mr *_MockRouteRecorder) Query(arg0 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Query", arg0)
-}
-
-func (_m *MockRoute) Execute(_param0 *Request, _param1 *Response) {
-	_m.ctrl.Call(_m, "Execute", _param0, _param1)
-}
-
-func (_mr *_MockRouteRecorder) Execute(arg0, arg1 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Execute", arg0, arg1)
+func (_mr *_MockRouteRecorder) Query(arg0, arg1, arg2 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Query", arg0, arg1, arg2)
 }

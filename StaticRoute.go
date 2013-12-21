@@ -1,17 +1,21 @@
 package pelau
 
-import ()
+import (
+	"net/http"
+)
 
 //StaticRoute provides static routing support.
-type StaticRoute struct {
+type staticRoute struct {
 	path   string
 	action Callback
 }
 
 //Query looks up whether the current http path matches the static route..
-func (s *StaticRoute) Query(route string) bool {
+func (s *staticRoute) Query(route string, w http.ResponseWriter, r *http.Request) bool {
 
 	if s.path == route {
+
+		s.action(DefaultRequest(r, make([]string, 0)), DefaultResponse(w))
 
 		return true
 
@@ -21,16 +25,9 @@ func (s *StaticRoute) Query(route string) bool {
 
 }
 
-//Execute executes this route.
-func (s *StaticRoute) Execute(req *Request, res *Response) {
+//Static Route constructor.
+func Static(path string, callback Callback) Route {
 
-	s.action(req, res)
-
-}
-
-//NewStaticRoute constructor.
-func NewStaticRoute(path string, callback Callback) Route {
-
-	return &StaticRoute{path, callback}
+	return &staticRoute{path, callback}
 
 }

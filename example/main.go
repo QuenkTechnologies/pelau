@@ -2,31 +2,29 @@ package main
 
 import (
 	"fmt"
-	"github.com/metasansana/groute"
-	"net/http"
+	"github.com/metasansana/pelau"
 )
 
-func handler(w http.ResponseWriter, r *groute.Request) {
+func handler(req pelau.Request, res pelau.Response) {
 
-	fmt.Printf("[%s] request detected on path %s.\n", r.Method, r.URL.Path)
-	fmt.Printf("Printing Submatches: %v\n", r.SUBMATCHES)
+	fmt.Printf("[%s] request detected on path %s.\n", req.Method(), req.Url().Path)
+	fmt.Printf("Printing Submatches: %v\n", req.Params())
 
 }
 
 func main() {
 
-	router := pelau.NewRouter(pelau.DefaultRouter)
-
-	router.Get(router.Static("/static/get", handler)).
-		Post(router.Static("/static/post", handler)).
-		Put(router.Static("/static/put", handler)).
-		Head(router.Static("/static/head", handler)).
-		Delete(router.Static("/static/delete", handler)).
-		Get(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
-		Post(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
-		Put(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
-		Head(router.Regex("/regex/[a-zA-Z0-9]+", handler)).
-		Delete(router.Regex("/regex/([a-zA-Z0-9])+", handler)).
+	pelau.Init(pelau.DefaultRouter()).
+		Get(pelau.Static("/static/get", handler)).
+		Post(pelau.Static("/static/post", handler)).
+		Put(pelau.Static("/static/put", handler)).
+		Head(pelau.Static("/static/head", handler)).
+		Delete(pelau.Static("/static/delete", handler)).
+		Get(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Post(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Put(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Head(pelau.Regex("/regex/[a-zA-Z0-9]+", handler)).
+		Delete(pelau.Regex("/regex/([a-zA-Z0-9]+)", handler)).
 		Bind(":8080")
 
 }

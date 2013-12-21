@@ -1,7 +1,10 @@
 package pelau
 
+import (
+	"net/http"
+)
+
 //Route is an inteface used to setup routing.
 type Route interface {
-	Query(string) bool
-	Execute(*Request, *Response)
+	Query(string, http.ResponseWriter, *http.Request) bool
 }

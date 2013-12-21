@@ -64,11 +64,8 @@ var _ = Describe("BridgeRouter", func() {
 
 	It("should bridge Use calls", func() {
 
-		cb := func(req pelau.Request, res pelau.Response) {
-
-		}
-		router.EXPECT().Use(cb)
-		bridge.Use(cb)
+		router.EXPECT().Use(route)
+		bridge.Use(route)
 
 	})
 
@@ -76,6 +73,10 @@ var _ = Describe("BridgeRouter", func() {
 
 		router.EXPECT().Bind("addr")
 		bridge.Bind("addr")
+
+	})
+
+	It("should bridge ServerHttp calls", func() {
 
 	})
 

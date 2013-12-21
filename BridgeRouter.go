@@ -1,13 +1,19 @@
 package pelau
 
+import (
+	"net/http"
+)
+
 //BridgeRouter is used to create a bridge pattern between the framework and customised routers.
 type BridgeRouter struct {
 	router Router
 }
 
-func (b BridgeRouter) Use(c Callback) {
+func (b BridgeRouter) Use(r Route) Router {
 
-	b.router.Use(c)
+	b.router.Use(r)
+
+	return b
 
 }
 
@@ -48,6 +54,12 @@ func (b BridgeRouter) Head(r Route) Router {
 func (b BridgeRouter) Bind(addr string) {
 
 	b.router.Bind(addr)
+
+}
+
+func (b BridgeRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+
+	b.router.ServeHTTP(w, r)
 
 }
 

@@ -10,29 +10,18 @@ const (
 	post = "POST"
 	del  = "DELETE"
 	head = "HEAD"
+	any  = "ANY"
 )
 
-type list map[string][]Route
+type routeList map[string][]Route
 
-//Server is the object that sets up routing.
-type Server struct {
-	routes list
-}
-
-//Regex is a factory method for regex route support.
-func (r *Server) Regex(regex string, callback Callback) Route {
-
-	return NewRegexRoute(regex, callback)
-}
-
-//Static is a factory method for static route support.
-func (r *Server) Static(path string, callback Callback) Route {
-
-	return NewStaticRoute(path, callback)
+//DefaultRouter is the object that sets up routing.
+type defaultRouter struct {
+	routes routeList
 }
 
 //Get adds a GET route
-func (r *Server) Get(route Route) *Server {
+func (r *defaultRouter) Get(route Route) Router {
 
 	r.routes[get] = append(r.routes["GET"], route)
 
@@ -41,7 +30,7 @@ func (r *Server) Get(route Route) *Server {
 }
 
 //Put adds a PUT route
-func (r *Server) Put(route Route) *Server {
+func (r *defaultRouter) Put(route Route) Router {
 
 	r.routes[put] = append(r.routes[put], route)
 
@@ -50,7 +39,7 @@ func (r *Server) Put(route Route) *Server {
 }
 
 //Post adds a POST route
-func (r *Server) Post(route Route) *Server {
+func (r *defaultRouter) Post(route Route) Router {
 
 	r.routes[post] = append(r.routes[post], route)
 
@@ -59,7 +48,7 @@ func (r *Server) Post(route Route) *Server {
 }
 
 //Delete adds a DELETE route.
-func (r *Server) Delete(route Route) *Server {
+func (r *defaultRouter) Delete(route Route) Router {
 
 	r.routes[del] = append(r.routes[del], route)
 
@@ -68,7 +57,7 @@ func (r *Server) Delete(route Route) *Server {
 }
 
 //Head adds a HEAD route.
-func (r *Server) Head(route Route) *Server {
+func (r *defaultRouter) Head(route Route) Router {
 
 	r.routes[head] = append(r.routes[head], route)
 
@@ -76,36 +65,50 @@ func (r *Server) Head(route Route) *Server {
 
 }
 
+//Use allows middleware to be added to this router.
+func (r *defaultRouter) Use(route Route) Router {
+
+	r.routes[any] = append(r.routes[any], route)
+
+	return r
+
+}
+
 //ServeHTTP implements the interface from http.Hanlder.
-func (r *Server) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+func (r *defaultRouter) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+
+	for _, aUse := range r.routes[any] {
+
+		aUse.Query(req.URL.Path, res, req)
+
+	}
 
 	for _, aRoute := range r.routes[req.Method] {
 
-		if result := aRoute.Query(req.URL.Path); result {
-
-		}
+		aRoute.Query(req.URL.Path, res, req)
 
 	}
 
 }
 
 //Bind binds the server to an interface and starts the app.
-func (r *Server) Bind(addr string) {
+func (r *defaultRouter) Bind(addr string) {
 
 	http.ListenAndServe(addr, r)
 
 }
 
-//New constructs a new Server object.
-func New() *Server {
+//DefaultRouter constructs a new Server object.
+func DefaultRouter() Router {
 
-	routes := make(list)
-	routes["GET"] = make([]Route, 0)
-	routes["PUT"] = make([]Route, 0)
-	routes["POST"] = make([]Route, 0)
-	routes["DELETE"] = make([]Route, 0)
-	routes["HEAD"] = make([]Route, 0)
+	routes := make(routeList)
+	routes[get] = make([]Route, 0)
+	routes[put] = make([]Route, 0)
+	routes[post] = make([]Route, 0)
+	routes[del] = make([]Route, 0)
+	routes[head] = make([]Route, 0)
+	routes[any] = make([]Route, 0)
 
-	return &Server{routes}
+	return &defaultRouter{routes}
 
 }
