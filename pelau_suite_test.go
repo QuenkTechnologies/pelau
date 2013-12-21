@@ -1,4 +1,4 @@
-package groute_test
+package pelau_test
 
 import (
 	. "github.com/onsi/ginkgo"
@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestGroute(t *testing.T) {
+func TestPelau(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Groute Suite")
+	RunSpecs(t, "Pelau Suite")
 }

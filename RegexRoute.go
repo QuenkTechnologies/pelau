@@ -1,4 +1,4 @@
-package groute
+package pelau
 
 import (
 	"net/http"
@@ -6,17 +6,17 @@ import (
 )
 
 //RegexRoute provides regex routing support.
-type RegexRoute struct {
+type regexRoute struct {
 	path   *regexp.Regexp
 	action Callback
 }
 
-//Trigger implements the method from the Route interface.
-func (self *RegexRoute) Trigger(route string, w http.ResponseWriter, r *http.Request) bool {
+//Query indicates if we have a regex match or not.
+func (s *regexRoute) Query(route string, w http.ResponseWriter, r *http.Request) bool {
 
-	if params := self.path.FindStringSubmatch(route); len(params) > 0 {
+	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
-		self.action(w, r)
+		s.action(DefaultRequest(r, params), DefaultResponse(w))
 
 		return true
 
@@ -24,9 +24,9 @@ func (self *RegexRoute) Trigger(route string, w http.ResponseWriter, r *http.Req
 	return false
 }
 
-//NewRegexRoute constructor.
-func NewRegexRoute(path string, callback Callback) Route {
+//Regex Route constructor.
+func Regex(path string, callback Callback) Route {
 
-	return &RegexRoute{regexp.MustCompile(path), callback}
+	return &regexRoute{regexp.MustCompile(path), callback}
 
 }
