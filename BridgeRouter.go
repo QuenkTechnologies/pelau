@@ -63,8 +63,8 @@ func (b BridgeRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 }
 
-//Init is the first step to using the framework. It expects a Router implementation to use.
-func Init(r Router) Router {
+//Cook is the first step to using the framework. It expects a Router implementation to use.
+func Cook(r Router) Router {
 
 	return &BridgeRouter{r}
 
