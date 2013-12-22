@@ -1,7 +1,6 @@
 package pelau
 
 import (
-	"net/http"
 	"regexp"
 )
 
@@ -12,12 +11,13 @@ type regexRoute struct {
 }
 
 //Query indicates if we have a regex match or not.
-func (s *regexRoute) Query(route string, w http.ResponseWriter, r *http.Request) bool {
+func (s *regexRoute) Query(route string, req Request, res Response) bool {
 
 	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
-		s.action(DefaultRequest(r, params), DefaultResponse(w))
+		req.SetParams(params)
 
+		s.action(req, res)
 		return true
 
 	}

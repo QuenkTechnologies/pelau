@@ -1,66 +1,10 @@
 package pelau
 
-import (
-	"net/http"
-)
+import ()
 
 //BridgeRouter is used to create a bridge pattern between the framework and customised routers.
 type BridgeRouter struct {
-	router Router
-}
-
-func (b BridgeRouter) Use(r Route) Router {
-
-	b.router.Use(r)
-
-	return b
-
-}
-
-func (b BridgeRouter) Get(r Route) Router {
-
-	b.router.Get(r)
-	return b
-
-}
-
-func (b BridgeRouter) Post(r Route) Router {
-
-	b.router.Post(r)
-	return b
-}
-
-func (b BridgeRouter) Put(r Route) Router {
-
-	b.router.Put(r)
-	return b
-
-}
-
-func (b BridgeRouter) Delete(r Route) Router {
-
-	b.router.Delete(r)
-	return b
-
-}
-
-func (b BridgeRouter) Head(r Route) Router {
-
-	b.router.Head(r)
-	return b
-
-}
-
-func (b BridgeRouter) Bind(addr string, f BindFunc) {
-
-	b.router.Bind(addr, f)
-
-}
-
-func (b BridgeRouter) ServeHTTP(w http.ResponseWriter, r *http.Request) {
-
-	b.router.ServeHTTP(w, r)
-
+	Router
 }
 
 //Cook is the first step to using the framework. It expects a Router implementation to use.

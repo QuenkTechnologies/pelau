@@ -6,17 +6,17 @@ import (
 
 //Router interface defines methods that are used for setting up a pelau app and running it.
 type Router interface {
-	Use(r Route) Router
+	Use(MiddleWare) Router
 
-	Get(r Route) Router
+	Get(Route) Router
 
-	Post(r Route) Router
+	Post(Route) Router
 
-	Put(r Route) Router
+	Put(Route) Router
 
-	Delete(r Route) Router
+	Delete(Route) Router
 
-	Head(r Route) Router
+	Head(Route) Router
 
 	Bind(string, BindFunc)
 

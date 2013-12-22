@@ -13,5 +13,7 @@ type Request interface {
 
 	Params() []string
 
+	SetParams([]string)
+
 	Raw() *http.Request
 }

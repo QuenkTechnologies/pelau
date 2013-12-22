@@ -29,8 +29,8 @@ func (_m *MockRouter) EXPECT() *_MockRouterRecorder {
 	return _m.recorder
 }
 
-func (_m *MockRouter) Use(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Use", r)
+func (_m *MockRouter) Use(_param0 MiddleWare) Router {
+	ret := _m.ctrl.Call(_m, "Use", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
@@ -39,8 +39,8 @@ func (_mr *_MockRouterRecorder) Use(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Use", arg0)
 }
 
-func (_m *MockRouter) Get(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Get", r)
+func (_m *MockRouter) Get(_param0 Route) Router {
+	ret := _m.ctrl.Call(_m, "Get", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
@@ -49,8 +49,8 @@ func (_mr *_MockRouterRecorder) Get(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Get", arg0)
 }
 
-func (_m *MockRouter) Post(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Post", r)
+func (_m *MockRouter) Post(_param0 Route) Router {
+	ret := _m.ctrl.Call(_m, "Post", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
@@ -59,8 +59,8 @@ func (_mr *_MockRouterRecorder) Post(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Post", arg0)
 }
 
-func (_m *MockRouter) Put(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Put", r)
+func (_m *MockRouter) Put(_param0 Route) Router {
+	ret := _m.ctrl.Call(_m, "Put", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
@@ -69,8 +69,8 @@ func (_mr *_MockRouterRecorder) Put(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Put", arg0)
 }
 
-func (_m *MockRouter) Delete(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Delete", r)
+func (_m *MockRouter) Delete(_param0 Route) Router {
+	ret := _m.ctrl.Call(_m, "Delete", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
@@ -79,8 +79,8 @@ func (_mr *_MockRouterRecorder) Delete(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Delete", arg0)
 }
 
-func (_m *MockRouter) Head(r Route) Router {
-	ret := _m.ctrl.Call(_m, "Head", r)
+func (_m *MockRouter) Head(_param0 Route) Router {
+	ret := _m.ctrl.Call(_m, "Head", _param0)
 	ret0, _ := ret[0].(Router)
 	return ret0
 }
