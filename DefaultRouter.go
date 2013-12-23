@@ -19,6 +19,7 @@ type routeList map[string][]Route
 type defaultRouter struct {
 	routes  routeList
 	onServe BindFunc
+	c       *Context
 }
 
 //Get adds a GET route
@@ -67,28 +68,32 @@ func (r *defaultRouter) Head(route Route) Router {
 }
 
 //Use allows middleware to be added to this router.
-func (r *defaultRouter) Use(route Route) Router {
+func (r *defaultRouter) Use(m MiddleWare) Router {
 
-	r.routes[any] = append(r.routes[any], route)
+	r.c.Add(m)
 
 	return r
 
 }
 
 //ServeHTTP implements the interface from http.Hanlder.
-func (r *defaultRouter) ServeHTTP(res http.ResponseWriter, req *http.Request) {
+func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Request) {
 
-	for _, aUse := range r.routes[any] {
+	r.c.Reset()
 
-		aUse.Query(req.URL.Path, res, req)
+	r.c.Add(func(req Request, res Response, c *Context) {
 
-	}
+		for _, aRoute := range r.routes[stdReq.Method] {
 
-	for _, aRoute := range r.routes[req.Method] {
+			if aRoute != nil {
+				aRoute.Query(stdReq.URL.Path, req, res)
+			}
 
-		aRoute.Query(req.URL.Path, res, req)
+		}
 
-	}
+	})
+
+	r.c.Next(BridgedRequest(DefaultRequest(stdReq)), BridgedResponse(DefaultResponse(stdRes)), r.c)
 
 }
 
@@ -97,13 +102,13 @@ func (r *defaultRouter) Bind(addr string, f BindFunc) {
 
 	r.onServe = f
 
-	http.ListenAndServe(addr, r)
-
 	if f != nil {
 
 		f()
 
 	}
+
+	http.ListenAndServe(addr, r)
 
 }
 
@@ -118,6 +123,6 @@ func DefaultRouter() Router {
 	routes[head] = make([]Route, 0)
 	routes[any] = make([]Route, 0)
 
-	return &defaultRouter{routes, DefaultBindFunc()}
+	return &defaultRouter{routes, DefaultBindFunc(), DefaultContext()}
 
 }
