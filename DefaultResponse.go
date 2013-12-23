@@ -17,50 +17,40 @@ func (r *defaultResponse) Status(code int) Response {
 
 }
 
+//Header queues a header up for delivery.
+func (r *defaultResponse) Header(key string, value string) Response {
+
+	r.w.Header().Add(key, value)
+
+	return r
+
+}
+
+//SetEncoder sets the Encoding
+func (r *defaultResponse) SetEncoder(e Encoder) Response {
+
+	return r
+
+}
+
+//WriteData writes out an interface to the stream using the interfal formatter is set.
+func (r *defaultResponse) WriteData(interface{}) Response {
+
+	return r
+
+}
+
 //Write writes out data to the client
-func (r *defaultResponse) Write(d Data) {
+func (r *defaultResponse) Write(data []byte) (int, error) {
 
-	d.Output(r.w)
-
-}
-
-//Created sends the created http status.
-func (r *defaultResponse) Created(loc string) {
-
-	//if loc != nil {
-
-	//	r.Redirect(loc, 304)
-
-	//	} else {
-
-	//		r.Status(304)
-	//		r.w.Write(nil)
-	//	}
+	return r.w.Write(data)
 
 }
 
-//Conflict sends conflict status
-func (r *defaultResponse) Conflict() {
+//Redirect is a convenience method for sending locations or redirects.
+func (r *defaultResponse) Redirect(url string, status int) Response {
 
-	r.Status(409)
-	r.w.Write(nil)
-
-}
-
-//NotFound sends a 404 status
-func (r *defaultResponse) NotFound() {
-
-	r.Status(404)
-	r.w.Write(nil)
-
-}
-
-//Ok sends the 200 status
-func (r *defaultResponse) Ok() {
-
-	r.Status(200)
-	r.w.Write(nil)
-
+	return r
 }
 
 //DefaultResponse creates a Response implementation.

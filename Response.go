@@ -4,17 +4,13 @@ package pelau
 type Response interface {
 	Status(int) Response
 
-	Write(Data)
+	Header(string, string) Response
 
-	Created(string)
+	SetEncoder(Encoder) Response
 
-	Conflict()
+	WriteData(interface{}) Response
 
-	NotFound()
+	Write([]byte) (int, error)
 
-	Ok()
-
-	//	Redirect(string, int)
-
-	//	Replace(Response)
+	Redirect(string, int) Response
 }
