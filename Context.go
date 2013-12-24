@@ -1,47 +1,42 @@
 package pelau
 
+import ()
+
+//Context represents the execution context when serving http handlers
 type Context struct {
-	mid  []MiddleWare
-	ptr  int
-	ptr2 int
+	mid []MiddleWare
+	ptr int
 }
 
+//DefaultContext is a Context costructor
 func DefaultContext() *Context {
 
-	return &Context{make([]MiddleWare, 0), 0, 0}
+	return &Context{make([]MiddleWare, 0), 0}
 
 }
 
-//
-func (self *Context) Add(m MiddleWare) {
+//Add includes middleware into the execution context.
+func (ctx *Context) Add(m MiddleWare) {
 
-	self.mid = append(self.mid, m)
-	self.ptr++
+	ctx.mid = append(ctx.mid, m)
 }
 
-func (self *Context) Reset() {
+//Reset resets the internal pointer over the list of middleware.
+func (ctx *Context) Reset() {
 
-	self.ptr = 0
-	self.ptr2 = 0
+	ctx.ptr = 0
 
 }
 
-//
-func (self *Context) Next(req Request, res Response, c *Context) {
+//Next executes the next middleware in the list (if any).
+func (ctx *Context) Next(req Request, res Response, c *Context) {
+	if ctx.ptr <= len(ctx.mid)-1 {
+		f := ctx.mid[ctx.ptr]
 
-	var f MiddleWare
+		ctx.ptr++
 
-	if self.ptr2 < self.ptr {
-
-		f = self.mid[self.ptr2]
-
-		if f != nil {
-
-			f(req, res, c)
-
-		}
+		f(req, res, c)
 
 	}
-	self.ptr2++
 
 }
