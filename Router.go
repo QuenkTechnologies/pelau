@@ -18,7 +18,7 @@ type Router interface {
 
 	Head(Route) Router
 
-	Bind(string, BindFunc)
+	Bind(string, func())
 
 	ServeHTTP(http.ResponseWriter, *http.Request)
 }

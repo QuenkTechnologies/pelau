@@ -4,7 +4,6 @@
 package pelau
 
 import (
-	url "net/url"
 	http "net/http"
 	gomock "code.google.com/p/gomock/gomock"
 )
@@ -28,26 +27,6 @@ func NewMockRequest(ctrl *gomock.Controller) *MockRequest {
 
 func (_m *MockRequest) EXPECT() *_MockRequestRecorder {
 	return _m.recorder
-}
-
-func (_m *MockRequest) Method() string {
-	ret := _m.ctrl.Call(_m, "Method")
-	ret0, _ := ret[0].(string)
-	return ret0
-}
-
-func (_mr *_MockRequestRecorder) Method() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Method")
-}
-
-func (_m *MockRequest) Url() *url.URL {
-	ret := _m.ctrl.Call(_m, "Url")
-	ret0, _ := ret[0].(*url.URL)
-	return ret0
-}
-
-func (_mr *_MockRequestRecorder) Url() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Url")
 }
 
 func (_m *MockRequest) Params() []string {

@@ -10,14 +10,16 @@ type regexRoute struct {
 	action Callback
 }
 
+type paramRequest struct {
+	Request
+}
+
 //Query indicates if we have a regex match or not.
 func (s *regexRoute) Query(route string, req Request, res Response) bool {
 
 	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
-		req.SetParams(params)
-
-		s.action(req, res)
+		s.action(&paramRequest{req}, res)
 		return true
 
 	}

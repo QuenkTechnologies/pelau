@@ -13,7 +13,6 @@ func (s *staticRoute) Query(route string, req Request, res Response) bool {
 
 	if s.path == route {
 
-		req.SetParams(make([]string, 0))
 		s.action(req, res)
 		return true
 

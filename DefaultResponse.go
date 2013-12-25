@@ -5,50 +5,57 @@ import (
 )
 
 type defaultResponse struct {
-	w http.ResponseWriter
+	http.ResponseWriter
+	enc map[string]func(Response) Encoder
 }
 
-//Status sets the status of the response
-func (r *defaultResponse) Status(code int) Response {
+//Head queues a header up for delivery.
+func (r *defaultResponse) Head(key string, value string) Response {
 
-	r.w.WriteHeader(code)
+	r.Header().Add(key, value)
 
 	return r
 
 }
 
-//Header queues a header up for delivery.
-func (r *defaultResponse) Header(key string, value string) Response {
+//UseEncoder sets the Encoding
+func (r *defaultResponse) AddEncoder(typ string, enc func(Response) Encoder) Response {
 
-	r.w.Header().Add(key, value)
-
-	return r
-
-}
-
-//SetEncoder sets the Encoding
-func (r *defaultResponse) SetEncoder(e Encoder) Response {
+	r.enc[typ] = enc
 
 	return r
 
 }
 
-//WriteData writes out an interface to the stream using the interfal formatter is set.
-func (r *defaultResponse) WriteData(interface{}) Response {
+//Send writes out an interface to the stream using the interfal formatter is set.
+func (r *defaultResponse) Send(typ string, i interface{}) Response {
+
+	if enc := r.enc[typ]; enc != nil {
+
+		err := enc(r).Encode(i)
+
+		if err != nil {
+
+			println(err)
+
+		}
+
+	} else {
+
+		panic("No Encoder found for type " + typ + "!")
+
+	}
 
 	return r
-
-}
-
-//Write writes out data to the client
-func (r *defaultResponse) Write(data []byte) (int, error) {
-
-	return r.w.Write(data)
 
 }
 
 //Redirect is a convenience method for sending locations or redirects.
 func (r *defaultResponse) Redirect(url string, status int) Response {
+
+	r.WriteHeader(status)
+
+	r.Head("Location", url)
 
 	return r
 }
@@ -56,6 +63,5 @@ func (r *defaultResponse) Redirect(url string, status int) Response {
 //DefaultResponse creates a Response implementation.
 func DefaultResponse(w http.ResponseWriter) Response {
 
-	return &defaultResponse{w}
-
+	return &defaultResponse{w, make(map[string]func(Response) Encoder)}
 }

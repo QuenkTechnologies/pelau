@@ -18,7 +18,7 @@ type routeList map[string][]Route
 //DefaultRouter is the object that sets up routing.
 type defaultRouter struct {
 	routes  routeList
-	onServe BindFunc
+	onServe func()
 	c       *Context
 }
 
@@ -81,7 +81,7 @@ func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Reque
 
 	r.c.Reset()
 
-	r.c.Add(func(req Request, res Response, c *Context) {
+	r.Use(func(req Request, res Response, c *Context) {
 
 		for _, aRoute := range r.routes[stdReq.Method] {
 
@@ -93,12 +93,12 @@ func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Reque
 
 	})
 
-	r.c.Next(BridgedRequest(DefaultRequest(stdReq)), BridgedResponse(DefaultResponse(stdRes)), r.c)
+	r.c.Next(DefaultRequest(stdReq), DefaultResponse(stdRes), r.c)
 
 }
 
 //Bind binds the server to an interface and starts the app.
-func (r *defaultRouter) Bind(addr string, f BindFunc) {
+func (r *defaultRouter) Bind(addr string, f func()) {
 
 	r.onServe = f
 
@@ -112,7 +112,7 @@ func (r *defaultRouter) Bind(addr string, f BindFunc) {
 
 }
 
-//DefaultRouter constructs a new Server object.
+//DefaultRouter constructs a new Default object.
 func DefaultRouter() Router {
 
 	routes := make(routeList)
@@ -123,6 +123,6 @@ func DefaultRouter() Router {
 	routes[head] = make([]Route, 0)
 	routes[any] = make([]Route, 0)
 
-	return &defaultRouter{routes, DefaultBindFunc(), DefaultContext()}
+	return &defaultRouter{routes, func() {}, DefaultContext()}
 
 }

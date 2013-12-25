@@ -4,6 +4,7 @@
 package pelau
 
 import (
+	http "net/http"
 	gomock "code.google.com/p/gomock/gomock"
 )
 
@@ -26,4 +27,73 @@ func NewMockResponse(ctrl *gomock.Controller) *MockResponse {
 
 func (_m *MockResponse) EXPECT() *_MockResponseRecorder {
 	return _m.recorder
+}
+
+func (_m *MockResponse) Head(_param0 string, _param1 string) Response {
+	ret := _m.ctrl.Call(_m, "Head", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Head(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Head", arg0, arg1)
+}
+
+func (_m *MockResponse) Redirect(_param0 string, _param1 int) Response {
+	ret := _m.ctrl.Call(_m, "Redirect", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Redirect(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Redirect", arg0, arg1)
+}
+
+func (_m *MockResponse) AddEncoder(_param0 string, _param1 func(Response) Encoder) Response {
+	ret := _m.ctrl.Call(_m, "AddEncoder", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) AddEncoder(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "AddEncoder", arg0, arg1)
+}
+
+func (_m *MockResponse) Send(_param0 string, _param1 interface{}) Response {
+	ret := _m.ctrl.Call(_m, "Send", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Send(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Send", arg0, arg1)
+}
+
+func (_m *MockResponse) Header() http.Header {
+	ret := _m.ctrl.Call(_m, "Header")
+	ret0, _ := ret[0].(http.Header)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Header() *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Header")
+}
+
+func (_m *MockResponse) Write(_param0 []byte) (int, error) {
+	ret := _m.ctrl.Call(_m, "Write", _param0)
+	ret0, _ := ret[0].(int)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+func (_mr *_MockResponseRecorder) Write(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Write", arg0)
+}
+
+func (_m *MockResponse) WriteHeader(_param0 int) {
+	_m.ctrl.Call(_m, "WriteHeader", _param0)
+}
+
+func (_mr *_MockResponseRecorder) WriteHeader(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "WriteHeader", arg0)
 }
