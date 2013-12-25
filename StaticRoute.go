@@ -1,22 +1,19 @@
-package groute
+package pelau
 
-import (
-	"net/http"
-)
+import ()
 
 //StaticRoute provides static routing support.
-type StaticRoute struct {
+type staticRoute struct {
 	path   string
 	action Callback
 }
 
-//Trigger implements the method from the Route interface.
-func (self *StaticRoute) Trigger(route string, w http.ResponseWriter, r *http.Request) bool {
+//Query looks up whether the current http path matches the static route..
+func (s *staticRoute) Query(route string, req Request, res Response) bool {
 
-	if self.path == route {
+	if s.path == route {
 
-		self.action(w, r)
-
+		s.action(req, res)
 		return true
 
 	}
@@ -25,9 +22,9 @@ func (self *StaticRoute) Trigger(route string, w http.ResponseWriter, r *http.Re
 
 }
 
-//NewStaticRoute constructor.
-func NewStaticRoute(path string, callback Callback) Route {
+//Static Route constructor.
+func Static(path string, callback Callback) Route {
 
-	return &StaticRoute{path, callback}
+	return &staticRoute{path, callback}
 
 }
