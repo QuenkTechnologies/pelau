@@ -17,7 +17,10 @@ var _ = Describe("DefaultRouter", func() {
 		server  *httptest.Server
 		count   int
 		route   pelau.Route
+		get     pelau.Route
+		post    pelau.Route
 		mockCtl *gomock.Controller
+		f       func()
 	)
 
 	BeforeEach(func() {
@@ -26,7 +29,18 @@ var _ = Describe("DefaultRouter", func() {
 		mockCtl = gomock.NewController(gomocktestreporter.New())
 		server = httptest.NewServer(router)
 		route = pelau.NewMockRoute(mockCtl)
+		get = pelau.NewMockRoute(mockCtl)
+		post = pelau.NewMockRoute(mockCtl)
 		count = 0
+		f := func() {
+
+			router.Get(get)
+			router.Post(post)
+			router.Put(route)
+			router.Delete(route)
+			router.Head(route)
+
+		}
 
 	})
 
@@ -53,16 +67,17 @@ var _ = Describe("DefaultRouter", func() {
 
 	})
 
-	Describe("when routing", func() {
+	Context("when routing", func() {
 
-		It("should work on  different request types", func() {
+		Describe("on GET requests", func() {
 
-			router.Get(route)
-			router.Head(route)
+			It("execute the route if the request is a GET one", func() {
 
-			http.Get(server.URL)
-			http.Head(server.URL)
+				f()
 
+				http.Get(server.URL)
+
+			})
 		})
 	})
 })

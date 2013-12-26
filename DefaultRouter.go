@@ -25,7 +25,7 @@ type defaultRouter struct {
 //Get adds a GET route
 func (r *defaultRouter) Get(route Route) Router {
 
-	r.routes[get] = append(r.routes["GET"], route)
+	r.routes[get] = append(r.routes[get], route)
 
 	return r
 
@@ -83,10 +83,13 @@ func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Reque
 
 	r.Use(func(req Request, res Response, c *Context) {
 
-		for _, aRoute := range r.routes[stdReq.Method] {
+		raw := req.Raw()
 
+		for _, aRoute := range r.routes[raw.Method] {
+			println(raw.Method)
+			println(r.routes[raw.Method])
 			if aRoute != nil {
-				aRoute.Query(stdReq.URL.Path, req, res)
+				aRoute.Query(raw.URL.Path, req, res)
 			}
 
 		}
