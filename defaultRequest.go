@@ -2,7 +2,6 @@ package pelau
 
 import (
 	"errors"
-	"net/http"
 )
 
 type defaultRequest struct {
@@ -12,7 +11,7 @@ type defaultRequest struct {
 
 func (r *defaultRequest) Param(index int) string {
 
-	val := r.request.params[index]
+	val := r.request.Params[index]
 
 	return val
 
@@ -61,8 +60,8 @@ func (r *defaultRequest) Raw(f func(*ModifiedRequest)) Request {
 }
 
 //DefaultRequest creates a new Request implementation.
-func DefaultRequest(req *http.Request) Request {
+func DefaultRequest(req *ModifiedRequest) Request {
 
-	return &defaultRequest{&ModifiedRequest{make([]string, 0), req}, make(map[string]func(Request) Decoder)}
+	return &defaultRequest{req, make(map[string]func(Request) Decoder)}
 
 }

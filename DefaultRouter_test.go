@@ -1,5 +1,6 @@
 package pelau_test
 
+/*
 import (
 	"code.google.com/p/gomock/gomock"
 	"github.com/metasansana/pelau"
@@ -11,7 +12,6 @@ import (
 )
 
 var _ = Describe("DefaultRouter", func() {
-
 	var (
 		router  pelau.Router
 		server  *httptest.Server
@@ -32,7 +32,7 @@ var _ = Describe("DefaultRouter", func() {
 		get = pelau.NewMockRoute(mockCtl)
 		post = pelau.NewMockRoute(mockCtl)
 		count = 0
-		f := func() {
+		f = func() {
 
 			router.Get(get)
 			router.Post(post)
@@ -80,4 +80,4 @@ var _ = Describe("DefaultRouter", func() {
 			})
 		})
 	})
-})
+})*/
