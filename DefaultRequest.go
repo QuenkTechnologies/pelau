@@ -5,19 +5,43 @@ import (
 )
 
 type defaultRequest struct {
-	request *http.Request
-	params  []string
+	request *ModifiedRequest
+	dec     map[string]func(Request) Decoder
 }
 
 //
 func (r *defaultRequest) Params() []string {
 
-	return r.params
+	return r.request.params
 
 }
 
 //
-func (r *defaultRequest) Raw() *http.Request {
+func (r *defaultRequest) AddDecoder(typ string, f func(Request) Decoder) {
+
+	r.dec[typ] = f
+
+}
+
+//
+func (r *defaultRequest) Retrieve(typ string, i interface{}) error {
+
+	if dec := r.dec[typ]; dec != nil {
+
+		err := dec(r).Decode(i)
+
+		return err
+
+	}
+
+	panic("No Decoder found for type " + typ + "!")
+
+	return nil
+
+}
+
+//
+func (r *defaultRequest) Raw() *ModifiedRequest {
 
 	return r.request
 
@@ -26,6 +50,6 @@ func (r *defaultRequest) Raw() *http.Request {
 //DefaultRequest creates a new Request implementation.
 func DefaultRequest(req *http.Request) Request {
 
-	return &defaultRequest{req, make([]string, 0)}
+	return &defaultRequest{&ModifiedRequest{make([]string, 0), req}, make(map[string]func(Request) Decoder)}
 
 }
