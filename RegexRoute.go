@@ -10,6 +10,18 @@ type regexRoute struct {
 	action Callback
 }
 
+type bridgeRequest struct {
+	Request
+
+	params []string
+}
+
+func (b *bridgeRequest) Params() []string {
+
+	return b.params
+
+}
+
 type paramRequest struct {
 	Request
 }
@@ -19,7 +31,7 @@ func (s *regexRoute) Query(route string, req Request, res Response) bool {
 
 	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
-		s.action(&paramRequest{req}, res)
+		s.action(&bridgeRequest{req, params}, res)
 		return true
 
 	}

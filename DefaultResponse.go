@@ -53,9 +53,9 @@ func (r *defaultResponse) Send(typ string, i interface{}) Response {
 //Redirect is a convenience method for sending locations or redirects.
 func (r *defaultResponse) Redirect(url string, status int) Response {
 
-	r.WriteHeader(status)
-
 	r.Head("Location", url)
+
+	r.WriteHeader(status)
 
 	return r
 }

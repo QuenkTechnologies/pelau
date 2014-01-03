@@ -86,8 +86,6 @@ func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Reque
 		raw := req.Raw()
 
 		for _, aRoute := range r.routes[raw.Method] {
-			println(raw.Method)
-			println(r.routes[raw.Method])
 			if aRoute != nil {
 				aRoute.Query(raw.URL.Path, req, res)
 			}
