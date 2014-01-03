@@ -4,7 +4,6 @@
 package pelau
 
 import (
-	http "net/http"
 	gomock "code.google.com/p/gomock/gomock"
 )
 
@@ -29,22 +28,52 @@ func (_m *MockRequest) EXPECT() *_MockRequestRecorder {
 	return _m.recorder
 }
 
-func (_m *MockRequest) Params() []string {
-	ret := _m.ctrl.Call(_m, "Params")
-	ret0, _ := ret[0].([]string)
+func (_m *MockRequest) Param(_param0 int) string {
+	ret := _m.ctrl.Call(_m, "Param", _param0)
+	ret0, _ := ret[0].(string)
 	return ret0
 }
 
-func (_mr *_MockRequestRecorder) Params() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Params")
+func (_mr *_MockRequestRecorder) Param(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Param", arg0)
 }
 
-func (_m *MockRequest) Raw() *http.Request {
-	ret := _m.ctrl.Call(_m, "Raw")
-	ret0, _ := ret[0].(*http.Request)
+func (_m *MockRequest) Get(_param0 string) string {
+	ret := _m.ctrl.Call(_m, "Get", _param0)
+	ret0, _ := ret[0].(string)
 	return ret0
 }
 
-func (_mr *_MockRequestRecorder) Raw() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Raw")
+func (_mr *_MockRequestRecorder) Get(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Get", arg0)
+}
+
+func (_m *MockRequest) ParseBody(_param0 string, _param1 interface{}, _param2 func(error, interface{})) Request {
+	ret := _m.ctrl.Call(_m, "ParseBody", _param0, _param1, _param2)
+	ret0, _ := ret[0].(Request)
+	return ret0
+}
+
+func (_mr *_MockRequestRecorder) ParseBody(arg0, arg1, arg2 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "ParseBody", arg0, arg1, arg2)
+}
+
+func (_m *MockRequest) Register(_param0 string, _param1 func(Request) Decoder) Request {
+	ret := _m.ctrl.Call(_m, "Register", _param0, _param1)
+	ret0, _ := ret[0].(Request)
+	return ret0
+}
+
+func (_mr *_MockRequestRecorder) Register(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Register", arg0, arg1)
+}
+
+func (_m *MockRequest) Raw(_param0 func(*ModifiedRequest)) Request {
+	ret := _m.ctrl.Call(_m, "Raw", _param0)
+	ret0, _ := ret[0].(Request)
+	return ret0
+}
+
+func (_mr *_MockRequestRecorder) Raw(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Raw", arg0)
 }
