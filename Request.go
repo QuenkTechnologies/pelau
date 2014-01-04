@@ -10,13 +10,12 @@ type Request interface {
 	//In order for this to work you must include the BodyParser middleware.
 	Get(string) string
 
-	//Read attempts to parse the contents of the request body but in a specified format.
-	//Calls to Read() passes the suplied interface to the associated Decoder (see Register()) and invokes a supplied Callback
-	//after decoding.
-	Read(string, interface{}, func(error, interface{})) Request
+	//Retrieve attempts to parse the contents of the request body but in a specified format.
+	//Calls to Retrieve() passes the suplied interface and callback  to the associated Decoder (see AddDecoder()).
+	Retrieve(mime string, i interface{}, callback func(error, interface{}))
 
-	//Register registers a func that will be used by Read() to decode the request body.
-	Register(string, func(Request) Decoder) Request
+	//AddDecoder registers a func that will be used by Read() to decode the request body.
+	AddDecoder(string, Decoder) Request
 
 	//Raw accepts a callback that is given access to the ModifiedRequest struct used internally.
 	Raw(func(*ModifiedRequest)) Request

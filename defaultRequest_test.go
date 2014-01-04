@@ -16,7 +16,6 @@ var _ = Describe("DefaultRequest", func() {
 		f      func(pelau.Request)
 		init   func(http.ResponseWriter, *http.Request)
 	)
-
 	initWithFormParser := func(w http.ResponseWriter, r *http.Request) {
 
 		r.ParseForm()
@@ -113,6 +112,40 @@ var _ = Describe("DefaultRequest", func() {
 				})
 
 			}
+
+			http.Get(server.URL)
+
+		})
+
+	})
+
+	Describe("using decoding features", func() {
+
+		It("should allow users to register a decoder func", func() {
+
+			f = func(req pelau.Request) {
+
+				req.AddDecoder("text/plain", func(reader pelau.Reader, i interface{}, cb func(error, interface{})) {
+
+					maap := i.(map[string]string)
+
+					maap["test"] = "TEST"
+
+					cb(nil, maap)
+
+				})
+
+				req.Retrieve("text/plain", make(map[string]string), func(err error, i interface{}) {
+
+					v := i.(map[string]string)
+
+					Expect(v["test"]).To(Equal("TEST"))
+
+				})
+
+			}
+
+			http.Get(server.URL)
 
 		})
 
