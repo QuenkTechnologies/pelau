@@ -3,20 +3,21 @@ package pelau
 //Request is the interface used to retrieve information about inbound http requests.
 type Request interface {
 
-	//Param returns the string indexed (if any) after a succesful match of a Regex route.
+	//Param provides the strings matched (if any) after a regex match on the uri path.
 	Param(int) string
 
-	//Get retrieves the value of a url query variable or a form key.
-	//In order for this to work you must include the FormParser middleware.
+	//Get retrieves the value of a query variable or a form body key.
+	//In order for this to work you must include the BodyParser middleware.
 	Get(string) string
 
-	//ParseBody attempts to parse the contents of the request body and as the type specified by the first argument.
-	//After passing the body into the given interface a callback is called.
-	ParseBody(string, interface{}, func(error, interface{})) Request
+	//Read attempts to parse the contents of the request body but in a specified format.
+	//Calls to Read() passes the suplied interface to the associated Decoder (see Register()) and invokes a supplied Callback
+	//after decoding.
+	Read(string, interface{}, func(error, interface{})) Request
 
-	//Register registers a func that will be used when calls to Read() match the first argument.
+	//Register registers a func that will be used by Read() to decode the request body.
 	Register(string, func(Request) Decoder) Request
 
-	//Raw provides access to the raw http.Request type.
+	//Raw accepts a callback that is given access to the ModifiedRequest struct used internally.
 	Raw(func(*ModifiedRequest)) Request
 }
