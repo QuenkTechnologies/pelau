@@ -8,10 +8,10 @@ import (
 //JSONInput adds JSON encoding support to the Response object.
 func JSONInput(req pelau.Request, res pelau.Response, ctx *pelau.Context) {
 
-	req.AddDecoder(pelau.JSON, func(current pelau.Request) pelau.Decoder {
+	req.AddDecoder(pelau.JSON, func(reader pelau.Reader, i interface{}, f func(error, interface{})) {
 
-		return json.NewDecoder(current.Raw().Body)
-
+		err := json.NewDecoder(reader).Decode(i)
+		f(err, i)
 	})
 
 	ctx.Next(req, res, ctx)

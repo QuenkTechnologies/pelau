@@ -52,4 +52,31 @@ var _ = Describe("DefaultResponse", func() {
 
 		})
 	})
+
+	Describe("using encoding features", func() {
+
+		It("should allow users to transmit via an  encoder func", func() {
+
+			f = func(res pelau.Response) {
+
+				res.AddEncoder("text/plane", func(writer pelau.Writer, i interface{}, cb func(error, int)) {
+
+					cb(nil, 100)
+
+				})
+
+				res.Send("text/plane", make(map[string]string), func(err error, i int) {
+
+					Expect(i).To(Equal(100))
+
+				})
+
+			}
+
+			http.Get(server.URL)
+
+		})
+
+	})
+
 })

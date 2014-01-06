@@ -1,12 +1,13 @@
 package pelau
 
 import (
+	"errors"
 	"net/http"
 )
 
 type defaultResponse struct {
 	http.ResponseWriter
-	enc map[string]func(Response) Encoder
+	enc map[string]Encoder
 }
 
 //Head queues a header up for delivery.
@@ -19,7 +20,7 @@ func (r *defaultResponse) Head(key string, value string) Response {
 }
 
 //UseEncoder sets the Encoding
-func (r *defaultResponse) AddEncoder(typ string, enc func(Response) Encoder) Response {
+func (r *defaultResponse) AddEncoder(typ string, enc Encoder) Response {
 
 	r.enc[typ] = enc
 
@@ -28,21 +29,15 @@ func (r *defaultResponse) AddEncoder(typ string, enc func(Response) Encoder) Res
 }
 
 //Send writes out an interface to the stream using the interfal formatter is set.
-func (r *defaultResponse) Send(typ string, i interface{}) Response {
+func (r *defaultResponse) Send(mime string, i interface{}, f func(error, int)) Response {
 
-	if enc := r.enc[typ]; enc != nil {
+	if enc := r.enc[mime]; enc == nil {
 
-		err := enc(r).Encode(i)
-
-		if err != nil {
-
-			println(err)
-
-		}
+		f(errors.New("No Encoder found for type "+mime+"!"), 0)
 
 	} else {
 
-		panic("No Encoder found for type " + typ + "!")
+		enc(r, i, f)
 
 	}
 
@@ -63,5 +58,5 @@ func (r *defaultResponse) Redirect(url string, status int) Response {
 //DefaultResponse creates a Response implementation.
 func DefaultResponse(w http.ResponseWriter) Response {
 
-	return &defaultResponse{w, make(map[string]func(Response) Encoder)}
+	return &defaultResponse{w, make(map[string]Encoder)}
 }
