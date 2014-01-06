@@ -26,3 +26,11 @@ type ModifiedRequest struct {
 
 //Callback coresponds to Callback's signature
 type Callback func(req Request, res Response)
+
+//Decoder is a single function interface for decoding streams.
+type Decoder interface {
+	Decode(interface{}) error
+}
+
+//Decoder funcs are used to decode request data.
+type Decoder func(Request, interface{}, func(error, interface{}))
