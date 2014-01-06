@@ -11,6 +11,7 @@ you want. However if all you want is to respond to some http request you've got 
 package pelau
 
 import (
+	"io"
 	"net/http"
 )
 
@@ -24,13 +25,21 @@ type ModifiedRequest struct {
 	*http.Request
 }
 
+//Reader is here for convenience
+type Reader interface {
+	io.Reader
+}
+
+//Writer is here for convenience
+type Writer interface {
+	io.Writer
+}
+
 //Callback coresponds to Callback's signature
 type Callback func(req Request, res Response)
 
-//Decoder is a single function interface for decoding streams.
-type Decoder interface {
-	Decode(interface{}) error
-}
+//Decoder funcs are used to decode raw incomming request data.
+type Decoder func(Reader, interface{}, func(error, interface{}))
 
-//Decoder funcs are used to decode request data.
-type Decoder func(Request, interface{}, func(error, interface{}))
+//Encoder funcs are used to encode raw outgoing data.
+type Encoder func(Writer, interface{}, func(error, int))

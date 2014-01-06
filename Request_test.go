@@ -48,24 +48,22 @@ func (_mr *_MockRequestRecorder) Get(arg0 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Get", arg0)
 }
 
-func (_m *MockRequest) ParseBody(_param0 string, _param1 interface{}, _param2 func(error, interface{})) Request {
-	ret := _m.ctrl.Call(_m, "ParseBody", _param0, _param1, _param2)
+func (_m *MockRequest) Retrieve(mime string, i interface{}, callback func(error, interface{})) {
+	_m.ctrl.Call(_m, "Retrieve", mime, i, callback)
+}
+
+func (_mr *_MockRequestRecorder) Retrieve(arg0, arg1, arg2 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Retrieve", arg0, arg1, arg2)
+}
+
+func (_m *MockRequest) AddDecoder(_param0 string, _param1 Decoder) Request {
+	ret := _m.ctrl.Call(_m, "AddDecoder", _param0, _param1)
 	ret0, _ := ret[0].(Request)
 	return ret0
 }
 
-func (_mr *_MockRequestRecorder) ParseBody(arg0, arg1, arg2 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "ParseBody", arg0, arg1, arg2)
-}
-
-func (_m *MockRequest) Register(_param0 string, _param1 func(Request) Decoder) Request {
-	ret := _m.ctrl.Call(_m, "Register", _param0, _param1)
-	ret0, _ := ret[0].(Request)
-	return ret0
-}
-
-func (_mr *_MockRequestRecorder) Register(arg0, arg1 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Register", arg0, arg1)
+func (_mr *_MockRequestRecorder) AddDecoder(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "AddDecoder", arg0, arg1)
 }
 
 func (_m *MockRequest) Raw(_param0 func(*ModifiedRequest)) Request {
