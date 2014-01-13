@@ -4,7 +4,7 @@ import (
 	"regexp"
 )
 
-//RegexRoute provides regex routing support.
+//regexRoute provides regex routing support.
 type regexRoute struct {
 	path   *regexp.Regexp
 	action Callback
@@ -17,7 +17,7 @@ type bridgeRequest struct {
 
 func (b *bridgeRequest) Param(at int) string {
 
-	return b.param[at]
+	return b.params[at]
 
 }
 
