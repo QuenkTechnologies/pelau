@@ -25,7 +25,6 @@ func (r *JSONResponse) Send(mime string, i interface{}) error {
 //JSONOutput adds JSON encoding support to the Response object.
 func JSONOutput(req pelau.Request, res pelau.Response, ctx *pelau.Context) {
 
-	response := &JSONResponse{res}
-	ctx.Next(req, response, ctx)
+	ctx.Next(req, &JSONResponse{res}, ctx)
 
 }

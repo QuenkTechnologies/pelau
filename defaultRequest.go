@@ -5,8 +5,7 @@ import (
 )
 
 type defaultRequest struct {
-	request  *ModifiedRequest
-	decoders map[string]Decoder
+	request *ModifiedRequest
 }
 
 func (r *defaultRequest) Param(index int) string {
@@ -17,7 +16,7 @@ func (r *defaultRequest) Param(index int) string {
 
 }
 
-func (r *defaultRequest) Get(index string) string {
+func (r *defaultRequest) Value(index string) string {
 
 	val := r.request.Form.Get(index)
 
@@ -25,28 +24,9 @@ func (r *defaultRequest) Get(index string) string {
 
 }
 
-func (r *defaultRequest) Retrieve(mime string, i interface{}, f func(error, interface{})) {
+func (r *defaultRequest) Decode(mime string, i interface{}) error {
 
-	if decode := r.decoders[mime]; decode == nil {
-
-		f(errors.New("No decoder found for type "+mime+"!"), i)
-
-	} else {
-
-		r.Raw(func(m *ModifiedRequest) {
-
-			decode(m.Body, i, f)
-
-		})
-
-	}
-
-}
-
-func (r *defaultRequest) AddDecoder(mime string, f Decoder) Request {
-
-	r.decoders[mime] = f
-	return r
+	return errors.New(mime + " decoder not found!")
 
 }
 
@@ -61,6 +41,6 @@ func (r *defaultRequest) Raw(f func(*ModifiedRequest)) Request {
 //DefaultRequest creates a new Request implementation.
 func DefaultRequest(req *ModifiedRequest) Request {
 
-	return &defaultRequest{req, make(map[string]Decoder)}
+	return &defaultRequest{req}
 
 }
