@@ -12,13 +12,12 @@ type regexRoute struct {
 
 type bridgeRequest struct {
 	Request
-
 	params []string
 }
 
-func (b *bridgeRequest) Params() []string {
+func (b *bridgeRequest) Param(at int) string {
 
-	return b.params
+	return b.param[at]
 
 }
 
