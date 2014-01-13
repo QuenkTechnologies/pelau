@@ -13,8 +13,8 @@ type Response interface {
 	//Redirect sends a location header to the client
 	Redirect(string, int) Response
 
-	//Stream  writes out data to the stream but it is first formatted by the current Encoder.
-	Stream(string, interface{}) (error, int)
+	//Send  writes out data to the stream but it is first formatted by the current Encoder.
+	Send(string, interface{}) error
 
 	http.ResponseWriter
 }

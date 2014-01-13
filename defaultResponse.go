@@ -18,10 +18,10 @@ func (r *defaultResponse) Head(key string, value string) Response {
 
 }
 
-//Stream writes out an interface to the stream using the interfal formatter is set.
-func (r *defaultResponse) Stream(mime string, i interface{}) (error, int) {
+//Send writes out an interface to the stream using the interfal formatter is set.
+func (r *defaultResponse) Send(mime string, i interface{}) error {
 
-	return error.New(mime + " encoder not found!"), 0
+	return errors.New(mime + " encoder not found!")
 
 }
 
