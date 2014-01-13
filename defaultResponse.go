@@ -7,7 +7,6 @@ import (
 
 type defaultResponse struct {
 	http.ResponseWriter
-	enc map[string]Encoder
 }
 
 //Head queues a header up for delivery.
@@ -28,20 +27,10 @@ func (r *defaultResponse) AddEncoder(typ string, enc Encoder) Response {
 
 }
 
-//Send writes out an interface to the stream using the interfal formatter is set.
-func (r *defaultResponse) Send(mime string, i interface{}, f func(error, int)) Response {
+//Stream writes out an interface to the stream using the interfal formatter is set.
+func (r *defaultResponse) Stream(mime string, i interface{}) (error, int) {
 
-	if enc := r.enc[mime]; enc == nil {
-
-		f(errors.New("No Encoder found for type "+mime+"!"), 0)
-
-	} else {
-
-		enc(r, i, f)
-
-	}
-
-	return r
+	return error.New(mime + " encoder not found!"), 0
 
 }
 
@@ -58,5 +47,5 @@ func (r *defaultResponse) Redirect(url string, status int) Response {
 //DefaultResponse creates a Response implementation.
 func DefaultResponse(w http.ResponseWriter) Response {
 
-	return &defaultResponse{w, make(map[string]Encoder)}
+	return &defaultResponse{w}
 }
