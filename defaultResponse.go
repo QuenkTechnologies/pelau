@@ -18,15 +18,6 @@ func (r *defaultResponse) Head(key string, value string) Response {
 
 }
 
-//UseEncoder sets the Encoding
-func (r *defaultResponse) AddEncoder(typ string, enc Encoder) Response {
-
-	r.enc[typ] = enc
-
-	return r
-
-}
-
 //Stream writes out an interface to the stream using the interfal formatter is set.
 func (r *defaultResponse) Stream(mime string, i interface{}) (error, int) {
 
