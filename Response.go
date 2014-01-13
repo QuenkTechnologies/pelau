@@ -13,11 +13,8 @@ type Response interface {
 	//Redirect sends a location header to the client
 	Redirect(string, int) Response
 
-	//AddEncoder sets the Encoder that will be used by future calls to WriteData
-	AddEncoder(string, Encoder) Response
-
-	//Send  writes out data to the stream but it is first formatted by the current Encoder.
-	Send(string, interface{}, func(error, int)) Response
+	//Stream  writes out data to the stream but it is first formatted by the current Encoder.
+	Stream(string, interface{}) (error, int)
 
 	http.ResponseWriter
 }
