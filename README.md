@@ -1,4 +1,6 @@
-groute
+pelau
 ======
 
-Simple web router written in go.
+Framework for writing RESTful API servers in go. 
+
+Better documentation to come soon!
