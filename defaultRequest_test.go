@@ -1,7 +1,7 @@
 package pelau_test
 
 import (
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
@@ -50,26 +50,26 @@ var _ = Describe("DefaultRequest", func() {
 			init = initWithFormParser
 		})
 
-		Context("when a Get request", func() {
+		Context("from a Get request", func() {
 
-			It("should be available via Get()", func() {
+			It("should be available via Value()", func() {
 
 				f = func(req pelau.Request) {
 
-					Expect(req.Get("first")).To(Equal("1"))
+					Expect(req.Value("first")).To(Equal("1"))
 
 				}
 
 				http.Get(server.URL + "?first=1&second=two")
 			})
 		})
-		Context("when a Post request", func() {
+		Context("from a Post request", func() {
 
-			It("should be available via Get()", func() {
+			It("should be available via Value()", func() {
 
 				f = func(req pelau.Request) {
 
-					Expect(req.Get("first")).To(Equal("1"))
+					Expect(req.Value("first")).To(Equal("1"))
 
 				}
 				http.PostForm(server.URL, url.Values{"first": {"1"}})
@@ -121,30 +121,15 @@ var _ = Describe("DefaultRequest", func() {
 
 	Describe("using decoding features", func() {
 
-		It("should allow users to register a decoder func", func() {
+		It("should return an error when no decoders are installed", func() {
 
 			f = func(req pelau.Request) {
 
-				req.AddDecoder("text/plain", func(reader pelau.Reader, i interface{}, cb func(error, interface{})) {
+				err := req.Decode("text/plain", &struct{}{})
 
-					maap := i.(map[string]string)
-
-					maap["test"] = "TEST"
-
-					cb(nil, maap)
-
-				})
-
-				req.Retrieve("text/plain", make(map[string]string), func(err error, i interface{}) {
-
-					v := i.(map[string]string)
-
-					Expect(v["test"]).To(Equal("TEST"))
-
-				})
+				Expect(err).Should(HaveOccurred())
 
 			}
-
 			http.Get(server.URL)
 
 		})

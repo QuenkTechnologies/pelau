@@ -1,21 +1,20 @@
-package mid
+package mime
 
 import (
-	"github.com/metasansana/pelau"
-	"net/http"
+	"github.com/quenktech/pelau"
 )
 
 //FormParser parse the url query variables and Body of a request.
 //If parsing is succesful then the data can be retrieved via pelau.Request.Get()
 func FormParser(req pelau.Request, res pelau.Response, ctx *pelau.Context) {
 
-	req.Raw(func(pkgReq *http.Request) {
+	req.Raw(func(modReq *pelau.ModifiedRequest) {
 
-		err := pkgReq.ParseForm()
+		err := modReq.ParseForm()
 
 		if err != nil {
 
-			println(err.Error())
+			req.Error(err, nil)
 
 		}
 
