@@ -1,7 +1,7 @@
 package pelau_test
 
 import (
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
@@ -52,4 +52,5 @@ var _ = Describe("DefaultResponse", func() {
 
 		})
 	})
+
 })

@@ -83,18 +83,19 @@ func (r *defaultRouter) ServeHTTP(stdRes http.ResponseWriter, stdReq *http.Reque
 
 	r.Use(func(req Request, res Response, c *Context) {
 
-		raw := req.Raw()
+		req.Raw(func(raw *ModifiedRequest) {
 
-		for _, aRoute := range r.routes[raw.Method] {
-			if aRoute != nil {
-				aRoute.Query(raw.URL.Path, req, res)
+			for _, aRoute := range r.routes[raw.Method] {
+				if aRoute != nil {
+					aRoute.Query(raw.URL.Path, req, res)
+				}
+
 			}
-
-		}
+		})
 
 	})
 
-	r.c.Next(DefaultRequest(stdReq), DefaultResponse(stdRes), r.c)
+	r.c.Next(DefaultRequest(&ModifiedRequest{[]string{}, stdReq}), DefaultResponse(stdRes), r.c)
 
 }
 

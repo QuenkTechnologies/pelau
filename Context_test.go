@@ -2,7 +2,7 @@ package pelau_test
 
 import (
 	"code.google.com/p/gomock/gomock"
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 	. "github.com/onsi/ginkgo"
 	"github.com/onsi/ginkgo/thirdparty/gomocktestreporter"
 	. "github.com/onsi/gomega"
