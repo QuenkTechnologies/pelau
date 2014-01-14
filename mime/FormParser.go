@@ -1,7 +1,7 @@
 package mime
 
 import (
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 )
 
 //FormParser parse the url query variables and Body of a request.

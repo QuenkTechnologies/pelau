@@ -2,7 +2,7 @@ package mime
 
 import (
 	"encoding/json"
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 )
 
 //JSONResponse adds support for sending a json enconding response.

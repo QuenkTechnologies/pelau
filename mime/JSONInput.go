@@ -2,7 +2,7 @@ package mime
 
 import (
 	"encoding/json"
-	"github.com/metasansana/pelau"
+	"github.com/quenktech/pelau"
 )
 
 //JSONRequest adds support for reading json requests.

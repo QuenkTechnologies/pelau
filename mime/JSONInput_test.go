@@ -3,8 +3,8 @@ package mime_test
 import (
 	"bytes"
 	"encoding/json"
-	"github.com/metasansana/pelau"
-	"github.com/metasansana/pelau/mime"
+	"github.com/quenktech/pelau"
+	"github.com/quenktech/pelau/mime"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
