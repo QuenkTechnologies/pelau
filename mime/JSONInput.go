@@ -1,4 +1,4 @@
-package mid
+package mime
 
 import (
 	"encoding/json"

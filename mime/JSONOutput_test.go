@@ -1,9 +1,9 @@
-package mid_test
+package mime_test
 
 import (
 	"encoding/json"
 	"github.com/metasansana/pelau"
-	"github.com/metasansana/pelau/mid"
+	"github.com/metasansana/pelau/mime"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
@@ -36,7 +36,7 @@ var _ = Describe("JSONOutput", func() {
 
 		f = func(res pelau.Response) {
 
-			json := &mid.JSONResponse{res}
+			json := &mime.JSONResponse{res}
 
 			json.Send("application/json", map[string]bool{"success": true})
 

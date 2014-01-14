@@ -1,4 +1,4 @@
-package mid_test
+package mime_test
 
 import (
 	. "github.com/onsi/ginkgo"
@@ -9,5 +9,5 @@ import (
 
 func TestMid(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Mid Suite")
+	RunSpecs(t, "Mime Suite")
 }

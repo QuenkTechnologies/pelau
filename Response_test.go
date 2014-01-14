@@ -59,6 +59,16 @@ func (_mr *_MockResponseRecorder) Send(arg0, arg1 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Send", arg0, arg1)
 }
 
+func (_m *MockResponse) Error(_param0 int, _param1 error) Response {
+	ret := _m.ctrl.Call(_m, "Error", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Error(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Error", arg0, arg1)
+}
+
 func (_m *MockResponse) Header() http.Header {
 	ret := _m.ctrl.Call(_m, "Header")
 	ret0, _ := ret[0].(http.Header)

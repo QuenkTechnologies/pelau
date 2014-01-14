@@ -35,6 +35,15 @@ func (r *defaultResponse) Redirect(url string, status int) Response {
 	return r
 }
 
+//Error sends a status header to the client.
+func (r *defaultResponse) Error(code int, err error) Response {
+
+	r.WriteHeader(code)
+
+	return r
+
+}
+
 //DefaultResponse creates a Response implementation.
 func DefaultResponse(w http.ResponseWriter) Response {
 

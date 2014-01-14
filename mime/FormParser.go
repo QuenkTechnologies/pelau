@@ -1,4 +1,4 @@
-package mid
+package mime
 
 import (
 	"github.com/metasansana/pelau"
@@ -8,13 +8,13 @@ import (
 //If parsing is succesful then the data can be retrieved via pelau.Request.Get()
 func FormParser(req pelau.Request, res pelau.Response, ctx *pelau.Context) {
 
-	req.Raw(func(pkgReq *pelau.ModifiedRequest) {
+	req.Raw(func(modReq *pelau.ModifiedRequest) {
 
-		err := pkgReq.ParseForm()
+		err := modReq.ParseForm()
 
 		if err != nil {
 
-			println(err.Error())
+			req.Error(err, nil)
 
 		}
 

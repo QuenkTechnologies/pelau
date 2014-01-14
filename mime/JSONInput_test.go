@@ -1,10 +1,10 @@
-package mid_test
+package mime_test
 
 import (
 	"bytes"
 	"encoding/json"
 	"github.com/metasansana/pelau"
-	"github.com/metasansana/pelau/mid"
+	"github.com/metasansana/pelau/mime"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"net/http"
@@ -41,7 +41,7 @@ var _ = Describe("JSONOutput", func() {
 
 		f = func(req pelau.Request) {
 
-			json := &mid.JSONRequest{req}
+			json := &mime.JSONRequest{req}
 			json.Decode("application/json", &result)
 			Expect(result["success"]).To(Equal(true))
 

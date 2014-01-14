@@ -16,5 +16,10 @@ type Response interface {
 	//Send  writes out data to the stream but it is first formatted by the current Encoder.
 	Send(string, interface{}) error
 
+	//Error is used to signal to the client that something went wrong.
+	//The default action is to send a http status using the first argument. This behaviour can be changed through
+	//middleware though.
+	Error(int, error) Response
+
 	http.ResponseWriter
 }
