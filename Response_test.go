@@ -49,24 +49,24 @@ func (_mr *_MockResponseRecorder) Redirect(arg0, arg1 interface{}) *gomock.Call 
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Redirect", arg0, arg1)
 }
 
-func (_m *MockResponse) AddEncoder(_param0 string, _param1 func(Response) Encoder) Response {
-	ret := _m.ctrl.Call(_m, "AddEncoder", _param0, _param1)
-	ret0, _ := ret[0].(Response)
-	return ret0
-}
-
-func (_mr *_MockResponseRecorder) AddEncoder(arg0, arg1 interface{}) *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "AddEncoder", arg0, arg1)
-}
-
-func (_m *MockResponse) Send(_param0 string, _param1 interface{}) Response {
+func (_m *MockResponse) Send(_param0 string, _param1 interface{}) error {
 	ret := _m.ctrl.Call(_m, "Send", _param0, _param1)
-	ret0, _ := ret[0].(Response)
+	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 func (_mr *_MockResponseRecorder) Send(arg0, arg1 interface{}) *gomock.Call {
 	return _mr.mock.ctrl.RecordCall(_mr.mock, "Send", arg0, arg1)
+}
+
+func (_m *MockResponse) Error(_param0 int, _param1 error) Response {
+	ret := _m.ctrl.Call(_m, "Error", _param0, _param1)
+	ret0, _ := ret[0].(Response)
+	return ret0
+}
+
+func (_mr *_MockResponseRecorder) Error(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Error", arg0, arg1)
 }
 
 func (_m *MockResponse) Header() http.Header {

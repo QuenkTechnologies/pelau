@@ -4,7 +4,6 @@
 package pelau
 
 import (
-	http "net/http"
 	gomock "code.google.com/p/gomock/gomock"
 )
 
@@ -29,22 +28,42 @@ func (_m *MockRequest) EXPECT() *_MockRequestRecorder {
 	return _m.recorder
 }
 
-func (_m *MockRequest) Params() []string {
-	ret := _m.ctrl.Call(_m, "Params")
-	ret0, _ := ret[0].([]string)
+func (_m *MockRequest) Param(_param0 int) string {
+	ret := _m.ctrl.Call(_m, "Param", _param0)
+	ret0, _ := ret[0].(string)
 	return ret0
 }
 
-func (_mr *_MockRequestRecorder) Params() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Params")
+func (_mr *_MockRequestRecorder) Param(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Param", arg0)
 }
 
-func (_m *MockRequest) Raw() *http.Request {
-	ret := _m.ctrl.Call(_m, "Raw")
-	ret0, _ := ret[0].(*http.Request)
+func (_m *MockRequest) Value(_param0 string) string {
+	ret := _m.ctrl.Call(_m, "Value", _param0)
+	ret0, _ := ret[0].(string)
 	return ret0
 }
 
-func (_mr *_MockRequestRecorder) Raw() *gomock.Call {
-	return _mr.mock.ctrl.RecordCall(_mr.mock, "Raw")
+func (_mr *_MockRequestRecorder) Value(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Value", arg0)
+}
+
+func (_m *MockRequest) Decode(mime string, i interface{}) error {
+	ret := _m.ctrl.Call(_m, "Decode", mime, i)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+func (_mr *_MockRequestRecorder) Decode(arg0, arg1 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Decode", arg0, arg1)
+}
+
+func (_m *MockRequest) Raw(_param0 func(*ModifiedRequest)) Request {
+	ret := _m.ctrl.Call(_m, "Raw", _param0)
+	ret0, _ := ret[0].(Request)
+	return ret0
+}
+
+func (_mr *_MockRequestRecorder) Raw(arg0 interface{}) *gomock.Call {
+	return _mr.mock.ctrl.RecordCall(_mr.mock, "Raw", arg0)
 }

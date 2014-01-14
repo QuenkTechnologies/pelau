@@ -4,10 +4,21 @@ import (
 	"regexp"
 )
 
-//RegexRoute provides regex routing support.
+//regexRoute provides regex routing support.
 type regexRoute struct {
 	path   *regexp.Regexp
 	action Callback
+}
+
+type bridgeRequest struct {
+	Request
+	params []string
+}
+
+func (b *bridgeRequest) Param(at int) string {
+
+	return b.params[at]
+
 }
 
 type paramRequest struct {
@@ -19,7 +30,7 @@ func (s *regexRoute) Query(route string, req Request, res Response) bool {
 
 	if params := s.path.FindStringSubmatch(route); len(params) > 0 {
 
-		s.action(&paramRequest{req}, res)
+		s.action(&bridgeRequest{req, params}, res)
 		return true
 
 	}

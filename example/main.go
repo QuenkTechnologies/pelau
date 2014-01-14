@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/metasansana/pelau"
-	"github.com/metasansana/pelau/mid"
+	"github.com/quenktech/pelau"
+	"github.com/quenktech/pelau/mid"
 )
 
 func handler(req pelau.Request, res pelau.Response) {
